@@ -1,0 +1,7 @@
+<h1>Lista de Textos Subidos</h1>
+<ul>
+    {% for texto in textos %}
+        <li>{{ texto.titulo }} - {{ texto.archivo.url }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'subir_texto' %}">Subir nuevo texto</a>
