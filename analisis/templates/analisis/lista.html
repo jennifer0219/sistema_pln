@@ -1,7 +1,71 @@
-<h1>Lista de Textos Subidos</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Textos Subidos</title>
+    <style>
+        body {
+            text-align: center; 
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        ul {
+            list-style-type: none; 
+            padding: 0;
+        }
+        li {
+            margin: 15px 0; 
+        }
+        
+        a.button {
+            display: inline-block;
+            padding: 8px 18px;
+            margin: 0 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+       
+        a.view-btn {
+            background-color: #007BFF; 
+        }
+        a.view-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        a.hist-btn {
+            background-color: #28a745; 
+        }
+        a.hist-btn:hover {
+            background-color: #1e7e34;
+        }
+        
+        a.upload-btn {
+            background-color: #ffc107; 
+            color: black;
+        }
+        a.upload-btn:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Textos Subidos</h1>
+
 <ul>
     {% for texto in textos %}
-        <li>{{ texto.titulo }} - {{ texto.archivo.url }}</li>
+        <li>
+            {{ texto.titulo }} - 
+            <a href="{{ texto.archivo.url }}" class="button view-btn">Visualizar archivo</a>
+            <a href="{% url 'histograma' texto.id %}" class="button hist-btn">Generar histograma</a>
+        </li>
     {% endfor %}
 </ul>
-<a href="{% url 'subir_texto' %}">Subir nuevo texto</a>
+
+<a href="{% url 'subir_texto' %}" class="button upload-btn">Subir nuevo texto</a>
+
+</body>
+</html>
