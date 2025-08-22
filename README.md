@@ -27,6 +27,7 @@ Sigue las preguntas (usuario, email y contraseña).
 python manage.py runserver
 
 Ingresa el link proporcionado en un navegador (ejemplo: http://127.0.0.1:8000/)
+Panel de administración: http://127.0.0.1:8000/admin/
 
 ## Funcionalidades
 - Subida de archivos `.txt`
@@ -34,3 +35,4 @@ Ingresa el link proporcionado en un navegador (ejemplo: http://127.0.0.1:8000/)
 - Generación de histograma de palabras en tabla
 - Visualización del archivo
 - Administración desde panel Django
+
