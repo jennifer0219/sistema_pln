@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import TextoAnalizadoForm
 from .models import TextoAnalizado
+from .forms import TextoAnalizadoForm
+from .utils import limpiar_texto
 from collections import Counter
-import re
 
 def subir_texto(request):
     if request.method == 'POST':
@@ -21,10 +21,12 @@ def lista_textos(request):
 def histograma(request, texto_id):
     texto = get_object_or_404(TextoAnalizado, id=texto_id)
     with open(texto.archivo.path, "r", encoding="utf-8") as f:
-        contenido = f.read().lower()
+        contenido = f.read()
 
-    # separar palabras con regex
-    palabras = re.findall(r'\w+', contenido)
+    # aplicar limpieza de texto (minúsculas, sin puntuación, sin stopwords)
+    palabras = limpiar_texto(contenido)
+
+    # contar frecuencias
     contador = Counter(palabras)
 
     return render(request, 'analisis/histograma.html', {
