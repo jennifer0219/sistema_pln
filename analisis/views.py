@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TextoAnalizado
 from .forms import TextoAnalizadoForm
-from .utils import limpiar_texto
-from collections import Counter
+from .utils import limpiar_texto, frecuencias_palabras, frecuencias_ngramos
 
 def subir_texto(request):
     if request.method == 'POST':
@@ -23,13 +22,33 @@ def histograma(request, texto_id):
     with open(texto.archivo.path, "r", encoding="utf-8") as f:
         contenido = f.read()
 
-    # aplicar limpieza de texto (minúsculas, sin puntuación, sin stopwords)
-    palabras = limpiar_texto(contenido)
-
-    # contar frecuencias
-    contador = Counter(palabras)
+    tokens = limpiar_texto(contenido)
+    contador = frecuencias_palabras(tokens)
 
     return render(request, 'analisis/histograma.html', {
         'texto': texto,
-        'contador': contador.most_common()  # lista de (palabra, frecuencia)
+        'contador': contador.most_common()
+    })
+
+def ngramas(request, texto_id):
+    texto = get_object_or_404(TextoAnalizado, id=texto_id)
+    with open(texto.archivo.path, "r", encoding="utf-8") as f:
+        contenido = f.read()
+
+    tokens = limpiar_texto(contenido)
+
+    n = request.GET.get('n')
+    try:
+        n = int(n)
+        if n < 1:
+            n = 2
+    except (TypeError, ValueError):
+        n = 2
+
+    contador = frecuencias_ngramos(tokens, n)
+
+    return render(request, 'analisis/ngramas.html', {
+        'texto': texto,
+        'contador': contador.most_common(),
+        'n': n
     })

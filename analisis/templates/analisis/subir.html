@@ -1,63 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Subir Texto</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5; 
-        }
-        form {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            min-width: 300px;
-        }
-        form p {
-            margin: 15px 0;
-            text-align: left;
-        }
-        input[type="file"], input[type="text"], textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #28a745; 
-            color: white;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #1e7e34; 
-        }
-        h1 {
-            margin-top: 30px;
-        }
-    </style>
-</head>
-<body>
+{% extends 'analisis/base.html' %}
+{% block title %}Subir Texto{% endblock %}
+{% block content %}
 
 <h1>Subir Texto</h1>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Subir</button>
+    <button type="submit">Subir archivo</button>
 </form>
 
-</body>
-</html>
+{% endblock %}

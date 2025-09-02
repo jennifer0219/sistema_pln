@@ -5,4 +5,6 @@ urlpatterns = [
     path('subir/', views.subir_texto, name='subir_texto'),
     path('', views.lista_textos, name='lista_textos'),
     path('histograma/<int:texto_id>/', views.histograma, name='histograma'),
+   path('ngramas/<int:texto_id>/', views.ngramas, name='ngramas'),
+
 ]
