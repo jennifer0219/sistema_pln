@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import TextoAnalizado
 from .forms import TextoAnalizadoForm
 from .utils import limpiar_texto, frecuencias_palabras, frecuencias_ngramos
+from .utils import limpiar_texto_mle, calcular_mle
+from .utils import obtener_tokens
 
 def subir_texto(request):
     if request.method == 'POST':
@@ -51,4 +53,20 @@ def ngramas(request, texto_id):
         'texto': texto,
         'contador': contador.most_common(),
         'n': n
+    })
+
+def mle_view(request, texto_id, n=2, usar_fronteras=0):
+    texto = get_object_or_404(TextoAnalizado, id=texto_id)
+    with open(texto.archivo.path, "r", encoding="utf-8") as f:
+        contenido = f.read()
+
+    tokens = obtener_tokens(contenido, usar_fronteras=bool(usar_fronteras))
+    resultados = calcular_mle(tokens, n=n, usar_fronteras=bool(usar_fronteras))
+
+    return render(request, 'analisis/mle.html', {
+        'texto': texto,
+        'resultados': resultados,
+        'tokens': tokens,  
+        'n': n,
+        'usar_fronteras': usar_fronteras,
     })

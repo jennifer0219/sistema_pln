@@ -1,0 +1,31 @@
+{% extends 'analisis/base.html' %}
+{% block title %}MLE - {{ n }}-gramas{% endblock %}
+
+{% block content %}
+
+<h1>MLE - {{ n }}-gramas del texto: {{ texto.titulo }}</h1>
+<h3>{% if usar_fronteras %}Con fronteras de oración{% else %}Sin fronteras{% endif %}</h3>
+
+<h2>Corpus tokenizado</h2>
+<p>{{ tokens }}</p>
+
+<h2>Tabla de n-gramas</h2>
+<table>
+    <tr>
+        <th>N-grama</th>
+        <th>Frecuencia</th>
+        <th>Probabilidad (MLE)</th>
+    </tr>
+    {% for ngrama, freq, prob in resultados %}
+    <tr>
+        <td>{{ ngrama }}</td>
+        <td>{{ freq }}</td>
+        <td>{{ prob|floatformat:3 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'lista_textos' %}" class="button">⬅ Volver</a>
+
+{% endblock %}
+
