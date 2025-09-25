@@ -1,0 +1,47 @@
+{% extends 'analisis/base.html' %}
+{% block title %}Autocompletar{% endblock %}
+
+{% block content %}
+
+<h1>Autocompletar usando {{ n }}-gramas</h1>
+<h3>{% if usar_fronteras %}Con fronteras{% else %}Sin fronteras{% endif %}</h3>
+
+<form method="get" style="margin-bottom:20px;">
+    <label for="n">N-grama:</label>
+    <input type="number" id="n" name="n" min="1" value="{{ n }}" style="width:50px;">
+
+    <label for="usar_fronteras">Fronteras:</label>
+    <select id="usar_fronteras" name="usar_fronteras">
+        <option value="0" {% if not usar_fronteras %}selected{% endif %}>Sin fronteras</option>
+        <option value="1" {% if usar_fronteras %}selected{% endif %}>Con fronteras</option>
+    </select>
+
+    <button type="submit" class="button">Actualizar</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="entrada">Escribe una frase:</label><br>
+    <input type="text" id="entrada" name="entrada" value="{{ entrada }}" style="width:70%; padding:8px;">
+    <button type="submit" class="button">Sugerir</button>
+</form>
+
+{% if sugerencias %}
+    <h2>Sugerencias:</h2>
+    <table>
+        <tr>
+            <th>Palabra</th>
+            <th>Probabilidad</th>
+        </tr>
+        {% for palabra, prob in sugerencias %}
+        <tr>
+            <td>{{ palabra }}</td>
+            <td>{{ prob|floatformat:3 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<a href="{% url 'lista_textos' %}" class="button">⬅ Volver</a>
+
+{% endblock %}

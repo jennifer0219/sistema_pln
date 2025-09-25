@@ -11,8 +11,8 @@
             <a href="{{ texto.archivo.url }}" class="button">Visualizar</a>
             <a href="{% url 'histograma' texto.id %}" class="button">Histograma</a>
             <a href="{% url 'ngramas' texto.id %}" class="button">N-Gramas</a>
-            <a href="{% url 'mle' texto.id 2 0 %}" class="button">MLE Bigramas (sin fronteras)</a>
-            <a href="{% url 'mle' texto.id 2 1 %}" class="button">MLE Bigramas (con fronteras)</a>
+            <a href="{% url 'mle' texto.id 2 0 %}" class="button">MLE Bigramas </a>
+            <a href="{% url 'autocompletar' texto.id 2 0 %}" class="button">Autocompletar</a>
         </li>
     {% endfor %}
 </ul>

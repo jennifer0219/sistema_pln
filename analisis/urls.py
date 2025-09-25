@@ -7,4 +7,6 @@ urlpatterns = [
     path('histograma/<int:texto_id>/', views.histograma, name='histograma'),
     path('ngramas/<int:texto_id>/', views.ngramas, name='ngramas'),
     path('mle/<int:texto_id>/<int:n>/<int:usar_fronteras>/', views.mle_view, name='mle'),
+    path('autocompletar/<int:texto_id>/<int:n>/<int:usar_fronteras>/', views.autocompletar, name='autocompletar'),
+
 ]
